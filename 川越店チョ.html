@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>Dr.テンポス ご開業予定物件の市場調査情報</title>
+<style>
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+  
+  @page {
+    size: A4 landscape;
+    margin: 0;
+  }
+
+  body {
+    font-family: 'Helvetica Neue', Arial, 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', Meiryo, sans-serif;
+    color: #333333;
+    background-color: #f4f5f7;
+    -webkit-print-color-adjust: exact;
+    font-size: 20px;
+    line-height: 1.4;
+  }
+
+  .slide {
+    width: 1280px;
+    height: 720px;
+    position: relative;
+    background: #ffffff;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    page-break-after: always;
+    margin: 0 auto;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  }
+
+  /* Header Styles */
+  .header {
+    background-color: #0D233A;
+    color: #ffffff;
+    padding: 16px 28px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 5px solid #E60012;
+  }
+
+  .header-title-container h1 {
+    font-size: 28px;
+    font-weight: bold;
+    letter-spacing: 1px;
+    color: #ffffff;
+  }
+
+  .header-subtitle {
+    font-size: 16px;
+    color: #FFF100;
+    margin-top: 2px;
+  }
+
+  .logo {
+    height: 45px;
+    width: auto;
+    flex-shrink: 0;
+    background-color: #ffffff;
+    padding: 3px 8px;
+    border-radius: 4px;
+  }
+
+  /* Property Summary Bar */
+  .summary-bar {
+    background-color: #1e3a5f;
+    color: #ffffff;
+    padding: 12px 28px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 19px;
+  }
+
+  .summary-item {
+    display: flex;
+    align-items: center;
+  }
+
+  .summary-label {
+    background-color: #E60012;
+    color: #ffffff;
+    padding: 3px 10px;
+    border-radius: 4px;
+    font-size: 15px;
+    font-weight: bold;
+    margin-right: 10px;
+  }
+
+  .summary-val {
+    font-weight: bold;
+    color: #ffffff;
+  }
+
+  /* Main Body Content Layout */
+  .content {
+    padding: 18px 28px;
+    flex-grow: 1;
+    display: flex;
+    gap: 20px;
+  }
+
+  .col-left {
+    flex: 1.1;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .col-right {
+    flex: 0.9;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  /* Card Component */
+  .card {
+    background: #ffffff;
+    border: 1px solid #dcdfe6;
+    border-left: 6px solid #0D233A;
+    border-radius: 6px;
+    padding: 16px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+  }
+
+  .card-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+
+  .card-title {
+    font-size: 22px;
+    font-weight: bold;
+    color: #0D233A;
+  }
+
+  .card-badge {
+    background-color: #FFF100;
+    color: #0D233A;
+    font-size: 14px;
+    font-weight: bold;
+    padding: 2px 8px;
+    border-radius: 3px;
+    margin-left: 10px;
+  }
+
+  .card-text {
+    font-size: 18px;
+    color: #444444;
+    line-height: 1.45;
+  }
+
+  .card-text ul {
+    list-style-type: disc;
+    padding-left: 22px;
+  }
+
+  .card-text li {
+    margin-bottom: 6px;
+  }
+
+  .card-text li:last-child {
+    margin-bottom: 0;
+  }
+
+  .highlight {
+    color: #E60012;
+    font-weight: bold;
+  }
+
+  .map-container {
+    height: 220px !important;
+    min-height: 220px !important;
+    flex-shrink: 0;
+    border: 2px solid #0D233A;
+    border-radius: 6px;
+    overflow: hidden;
+  }
+
+  /* Slide 2 Table & Callout */
+  .table-container {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 18px;
+  }
+
+  th, td {
+    border: 1px solid #cbd5e1;
+    padding: 8px 12px;
+    text-align: center;
+  }
+
+  th {
+    background-color: #0D233A;
+    color: #ffffff;
+    font-weight: bold;
+    font-size: 18px;
+  }
+
+  td strong {
+    font-size: 22px;
+  }
+
+  .flr-container {
+    display: flex;
+    gap: 12px;
+    margin-top: 4px;
+  }
+
+  .flr-box {
+    flex: 1;
+    background-color: #f1f5f9;
+    border: 1px solid #cbd5e1;
+    border-top: 4px solid #E60012;
+    padding: 10px;
+    text-align: center;
+    border-radius: 4px;
+  }
+
+  .flr-title {
+    font-size: 16px;
+    font-weight: bold;
+    color: #0D233A;
+  }
+
+  .flr-value {
+    font-size: 20px;
+    font-weight: bold;
+    color: #E60012;
+    margin-top: 2px;
+  }
+
+  .flr-desc {
+    font-size: 13px;
+    color: #64748b;
+  }
+
+  .tile-grid {
+    display: flex;
+    gap: 16px;
+    margin-top: 10px;
+  }
+
+  .tile {
+    flex: 1;
+    background: #ffffff;
+    border: 1px solid #dcdfe6;
+    border-top: 5px solid #0D233A;
+    border-radius: 6px;
+    padding: 14px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.03);
+  }
+
+  .tile-title {
+    font-size: 20px;
+    font-weight: bold;
+    color: #0D233A;
+    margin-bottom: 8px;
+    border-bottom: 2px solid #FFF100;
+    padding-bottom: 4px;
+  }
+
+  .tile-content {
+    font-size: 16.5px;
+    color: #333333;
+    line-height: 1.4;
+  }
+
+  /* Footer */
+  .footer {
+    padding: 8px 28px;
+    background-color: #ffffff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 14px;
+    color: #666666;
+  }
+
+  .footer-line {
+    height: 6px;
+    background: linear-gradient(90deg, #E60012 0%, #FFF100 100%);
+    width: 100%;
+  }
+</style>
+</head>
+<body>
+
+  <!-- SLIDE 1: FRONT -->
+  <div class="slide">
+    <div>
+      <div class="header">
+        <div class="header-title-container">
+          <h1>ご開業予定物件の市場調査情報</h1>
+          <div class="header-subtitle">飲食店開業コンサルティング「Dr.テンポス」立地・市場診断レポート</div>
+        </div>
+        <img class="logo" src="http://googleusercontent.com/image_collection/image_retrieval/18386698360770936096" alt="Dr.テンポス">
+      </div>
+
+      <div class="summary-bar">
+        <div class="summary-item">
+          <span class="summary-label">所在地</span>
+          <span class="summary-val">埼玉県川越市菅原町</span>
+        </div>
+        <div class="summary-item">
+          <span class="summary-label">規模</span>
+          <span class="summary-val">36.43坪（120.46㎡）/ 想定45席</span>
+        </div>
+        <div class="summary-item">
+          <span class="summary-label">業態</span>
+          <span class="summary-val">ラーメン（ロードサイド）</span>
+        </div>
+        <div class="summary-item">
+          <span class="summary-label">想定客単価</span>
+          <span class="summary-val">昼 1,000円 / 夜 2,000円</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="content">
+      <!-- Left Column -->
+      <div class="col-left">
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">立地特性とメインターゲット</div>
+            <span class="card-badge">一次データ案内</span>
+          </div>
+          <div class="card-text">
+            <ul>
+              <li><strong>幹線道路沿い＆駅近郊の広域集客が見込めるロードサイド立地！</strong> 車利用のファミリー・ドライバー層に加え、通勤・通学客など幅広い集客が期待できます。</li>
+              <li>【100%正確な一次データの取得案内】国の無料公的ツール<strong>「j-Stat MAP」</strong>で出店地にピンを立てるだけで、<strong>半径Xm以内の正確な人口・世帯数・年齢層・年収階層レポート</strong>を自動作成できます。</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">テンポスからのコンセプト提案</div>
+            <span class="card-badge">戦略・アクション</span>
+          </div>
+          <div class="card-text">
+            <ul>
+              <li><strong>【コンセプト案】『川越・車移動の定番！ガッツリ満足＆ファミリーラーメン』</strong><br>昼は迅速提供で高回転率を確保し、夜はサイドメニュー充実で単価アップと家族客定着を狙います。</li>
+              <li>【動線調査のアクション】経済産業省の<strong>「RESAS（地域経済分析システム）」</strong>を活用し、エリア内の時間帯別「人の流れ」や車の交通量を視覚的に把握した上で現地調査を実施してください。</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Column -->
+      <div class="col-right">
+        <div class="map-container">
+          <iframe src="https://maps.google.com/maps?output=embed&q=埼玉県川越市菅原町&z=16&t=m" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+        </div>
+
+        <div class="card" style="border-left-color: #E60012;">
+          <div class="card-header">
+            <div class="card-title" style="color: #E60012;">出店エリアポテンシャル総評</div>
+          </div>
+          <div class="card-text">
+            川越市菅原町エリアは、ロードサイドならではの広い駐車場確保と高い視認性が鍵となる好立地です。<br><br>
+            ハルシネーション（虚偽データ）を防ぎ着実な出店を果たすため、<strong>「j-Stat MAP」</strong>および<strong>「RESAS」</strong>で公的データに基づいた一次データを取得し、最終的な出店決断およびメニュー構成の最適化を行ってください。
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <div class="footer">
+        <span>株式会社テンポスバスターズ 提案担当：ドクターテンポスコンサルティング室</span>
+        <span>Page 1 / 2</span>
+      </div>
+      <div class="footer-line"></div>
+    </div>
+  </div>
+
+
+  <!-- SLIDE 2: BACK -->
+  <div class="slide">
+    <div>
+      <div class="header">
+        <div class="header-title-container">
+          <h1>収支シミュレーション ＆ テンポス・アドバイス</h1>
+          <div class="header-subtitle">36.43坪・45席ロードサイドラーメンにおける現実的な損益モデル</div>
+        </div>
+        <img class="logo" src="http://googleusercontent.com/image_collection/image_retrieval/18386698360770936096" alt="Dr.テンポス">
+      </div>
+
+      <div class="summary-bar" style="background-color: #0D233A;">
+        <div class="summary-item">
+          <span class="summary-label">想定規模</span>
+          <span class="summary-val">36.43坪 / 45席</span>
+        </div>
+        <div class="summary-item">
+          <span class="summary-label">営業日数</span>
+          <span class="summary-val">月26日営業</span>
+        </div>
+        <div class="summary-item">
+          <span class="summary-label">目標営業利益率</span>
+          <span class="summary-val">約15.2%</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="content" style="flex-direction: column; gap: 12px;">
+      <!-- Table Section -->
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th>区分</th>
+              <th>客単価</th>
+              <th>1日想定客数 / 回転数</th>
+              <th>日売上</th>
+              <th>月間想定売上高（26日）</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>ランチ（昼）</strong></td>
+              <td>1,000 円</td>
+              <td>90.0 名（2.0 回転）</td>
+              <td>90,000 円</td>
+              <td>234.0 万円</td>
+            </tr>
+            <tr>
+              <td><strong>ディナー（夜）</strong></td>
+              <td>2,000 円</td>
+              <td>67.5 名（1.5 回転）</td>
+              <td>135,000 円</td>
+              <td>351.0 万円</td>
+            </tr>
+            <tr style="background-color: #f8fafc;">
+              <td colspan="3" style="text-align: right; font-weight: bold; font-size: 19px;">合計想定月間売上高 / 月間営業利益（目安）</td>
+              <td><strong class="highlight">225,000 円/日</strong></td>
+              <td><strong class="highlight">585.0 万円/月</strong><br><span style="font-size:15px; color:#16a34a; font-weight:bold;">（想定営業利益：約 89 万円/月）</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- FLR Metrics Callout -->
+      <div class="flr-container">
+        <div class="flr-box">
+          <div class="flr-title">F：原価率 (Food)</div>
+          <div class="flr-value">33.0%</div>
+          <div class="flr-desc">約 193 万円/月（スープ・麺材料費）</div>
+        </div>
+        <div class="flr-box">
+          <div class="flr-title">L：人件費率 (Labor)</div>
+          <div class="flr-value">26.0%</div>
+          <div class="flr-desc">約 152 万円/月（ワンオペ不可/シフト制）</div>
+        </div>
+        <div class="flr-box">
+          <div class="flr-title">R：適正家賃目安 (Rent)</div>
+          <div class="flr-value">10.0%以下</div>
+          <div class="flr-desc">推奨：月額 <strong style="color:#E60012;">58.5万円</strong> 以下（坪単価1.6万）</div>
+        </div>
+      </div>
+
+      <!-- 3 Tile Advice -->
+      <div class="tile-grid">
+        <div class="tile">
+          <div class="tile-title">リスクと対策</div>
+          <div class="tile-content">
+            ・<strong>広坪数（36坪）の家賃・光熱費リスク</strong>：高光熱費対策に省エネ機器・食券機を導入し省人化を図る。<br>
+            ・<strong>アイドルタイム対策</strong>：14〜17時は中休み導入または通し営業で限定メニュー（和え玉・セット）を提供。
+          </div>
+        </div>
+
+        <div class="tile">
+          <div class="tile-title">集客のポイント</div>
+          <div class="tile-content">
+            ・<strong>ロードサイドの視認性・看板強化</strong>：車からの視認性を意識した大型看板と駐車場の出入りやすさを確保。<br>
+            ・<strong>MEO＆SNS展開</strong>：RESASデータで車移動層の動線を行動的に把握し、GoogleマップやSNSで広域集客を仕掛ける。
+          </div>
+        </div>
+
+        <div class="tile">
+          <div class="tile-title">テンポスのアドバイス</div>
+          <div class="tile-content">
+            ・<strong>大型ラーメン厨房機器は中古活用</strong>：茹で麺機や大型スープ用寸胴などテンポスのリサイクル品で初期費用削減。<br>
+            ・浮いた投資費用を外観看板や駐車場整備、食券機導入に集中投資して安全な創業を実現します。
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <div class="footer">
+        <span>株式会社テンポスバスターズ 提案担当：ドクターテンポスコンサルティング室</span>
+        <span>Page 2 / 2</span>
+      </div>
+      <div class="footer-line"></div>
+    </div>
+  </div>
+
+</body>
+</html>
